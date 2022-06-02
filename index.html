@@ -1,0 +1,126 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://unpkg.com/three@0.137.4/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.137.4/examples/js/controls/OrbitControls.js"></script>
+  </head>
+<body>
+ <script>
+      // ページの読み込みを待つ
+      window.addEventListener('DOMContentLoaded', init);
+
+      function init() {
+        // サイズを指定
+        const width = 800
+        const height = 600;
+
+        // レンダラーを作成
+        var renderer = new THREE.WebGLRenderer();
+        document.body.appendChild(renderer.domElement);
+        renderer.setSize(width, height);
+
+        // シーンを作成
+        const scene = new THREE.Scene();
+
+        // カメラを作成
+        const camera = new THREE.PerspectiveCamera(45, width / height);
+        // カメラの初期座標を設定
+        camera.position.set(0, 0, 50);
+
+        // カメラコントローラーを作成
+        const controls = new THREE.OrbitControls(camera, document.body); 
+        
+        // 平行光源1
+        var directionalLight1 = new THREE.DirectionalLight(0xffffff);
+        directionalLight1.position.set(10, 10, 10);
+        // シーンに追加
+        scene.add(directionalLight1);
+        // 平行光源2
+        var directionalLight2 = new THREE.DirectionalLight(0x888888);
+        directionalLight2.position.set(-10, -10, 10);
+        // シーンに追加
+        scene.add(directionalLight2);
+
+        // helper
+        /*const gridHelper = new THREE.GridHelper(2,10); // size, step
+        scene.add(gridHelper);
+        const axisHelper = new THREE.AxisHelper(2); //軸の長さ　X：赤、Y：緑、z：青
+        scene.add(axisHelper);*/
+
+        var textureLoader = new THREE.TextureLoader();  
+        var texture = textureLoader.load("earth.jpg");
+        var mat = new THREE.MeshPhongMaterial();
+        mat.map = texture;
+
+        // 太陽
+        var sun = new THREE.SphereGeometry(3, 20, 20);
+        var material = new THREE.MeshBasicMaterial({ color:0xaa0000 });
+        var Sphere = new THREE.Mesh(sun, mat);
+        Sphere.position.set(0,0,0);
+        scene.add(Sphere);
+        
+        var geometry = new THREE.SphereGeometry(0.3, 32, 32);
+        var spherematerial = new THREE.MeshPhongMaterial({color:0x22dd22}); 
+        var Sphere2 = new THREE.Mesh(geometry, spherematerial);
+        Sphere2.position.set(10,-5,5);
+        
+        
+        var Sphere3 = new THREE.Mesh(geometry, spherematerial);
+        Sphere3.position.set(-8,3,0);
+        
+        
+        var Sphere4 = new THREE.Mesh(geometry, spherematerial);
+        Sphere4.position.set(-15,0,3);
+
+        var Sphere5 = new THREE.Mesh(geometry, spherematerial);
+        Sphere5.position.set(10,10,0);
+
+        var Sphere6 = new THREE.Mesh(geometry, spherematerial);
+        Sphere6.position.set(15,-10,0);
+       
+        //全体のオブジェクト
+        //const all = new THREE.Object3D(); 
+        const all = new THREE.Group()
+        all.add(Sphere2); // 箱2を追加 
+        all.add(Sphere3); // 箱3を追加 
+        all.add(Sphere4); // 箱4を追加 
+        all.add(Sphere5);
+        all.add(Sphere6);
+        all.position.set(0,0,0);//箱1～4のグループの原点の位置
+        scene.add(all); 
+
+        update();
+
+        // 毎フレーム時に実行されるループイベントです
+        function update() {
+          // レンダリング
+          renderer.render(scene, camera);
+          requestAnimationFrame(update);
+
+        // 箱を回転させる
+        Sphere2.rotation.x += 0.02;
+        Sphere2.rotation.y += 0.02;
+        
+        Sphere3.rotation.x -= 0.01;
+        Sphere3.rotation.y -= 0.01;
+
+        Sphere4.rotation.x += 0.07;
+        Sphere4.rotation.y += 0.07;
+       
+        Sphere5.rotation.x += 0.01;
+        Sphere5.rotation.y += 0.01;
+
+        Sphere6.rotation.x += 0.01;
+        Sphere6.rotation.y -= 0.05;
+
+
+        all.rotation.x += 0.01;
+        all.rotation.y += 0.01;
+        all.rotation.z += 0.01;
+
+
+        }
+      }
+    </script>
+</body>
+</html>
