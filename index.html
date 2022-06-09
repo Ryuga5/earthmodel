@@ -5,6 +5,8 @@
     <script src="https://unpkg.com/three@0.137.4/examples/js/controls/OrbitControls.js"></script>
   </head>
 <body>
+  <h1>第4回提出物</h1>
+  第3回で作成した作品に、画像の使い方を覚えるために地球の画像を貼り付け
  <script>
       // ページの読み込みを待つ
       window.addEventListener('DOMContentLoaded', init);
@@ -48,7 +50,7 @@
         scene.add(axisHelper);*/
 
         var textureLoader = new THREE.TextureLoader();  
-        var texture = textureLoader.load("earthmap.jpg");
+        var texture = textureLoader.load("earthmap.");
         var mat = new THREE.MeshPhongMaterial();
         mat.map = texture;
 
